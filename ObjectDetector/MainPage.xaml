@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:local="clr-namespace:ObjectDetector" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
+             ios:Page.UseSafeArea="true"
+             x:Class="ObjectDetector.MainPage"
+             BackgroundColor="White"
+             Title="Object Detector">
+    <ContentPage.BindingContext>
+        <local:MainViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Settings" Order="Primary" Icon="Settings.png" 
+                     Priority="0" Command="{Binding ShowSettingsCommand}"/>
+    </ContentPage.ToolbarItems>
+    <Grid RowSpacing="20" ColumnSpacing="20" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <skia:SKCanvasView x:Name="ImageCanvas" 
+                           Grid.ColumnSpan="2"
+                           PaintSurface="OnCanvasViewPaintSurface"/>
+
+        <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalOptions="Fill" Spacing="10">
+            <Label Text="Threshold" TextColor="DarkSlateBlue" HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+            <Slider Minimum="0" Maximum="1" ThumbColor="DarkSlateBlue" MinimumTrackColor="#FFA0A0"
+                    MaximumTrackColor="#7070FF" HorizontalOptions="FillAndExpand"
+                    Value="{Binding Probability}" VerticalOptions="Center"
+                    IsEnabled="{Binding IsEnabled}"/>
+            <Label Text="{Binding ProbabilityText}" TextColor="DarkSlateBlue" HorizontalOptions="End"
+                   VerticalOptions="Center"/>
+        </StackLayout>
+
+        <Button Grid.Row="2" Grid.Column="0" Text="Take photo" BackgroundColor="DarkSlateBlue" 
+                TextColor="White" Command="{Binding TakePhotoCommand}"
+                IsEnabled="{Binding IsEnabled}"/>
+        <Button Grid.Row="2" Grid.Column="1" Text="Choose photo" BackgroundColor="DarkSlateBlue" 
+                TextColor="White" Command="{Binding PickPhotoCommand}"
+                IsEnabled="{Binding IsEnabled}"/>
+        
+        <Grid Grid.RowSpan="3" Grid.ColumnSpan="2" IsVisible="{Binding IsBusy}" 
+              Margin="-20"
+              BackgroundColor="{StaticResource BusySheetBackground}">
+            <lottie:AnimationView Animation="loader.json" 
+                                  IsVisible="{Binding IsBusy}"
+                                  Loop="true" 
+                                  AutoPlay="true"
+                                  HeightRequest="150"
+                                  WidthRequest="150"
+                                  VerticalOptions="Center" 
+                                  HorizontalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

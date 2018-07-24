@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:ObjectDetector" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
+             ios:Page.UseSafeArea="true"
+             x:Class="ObjectDetector.SettingsPage"
+             BackgroundColor="White"
+             Title="Settings">
+    <ContentPage.BindingContext>
+        <local:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+                <StackLayout HorizontalOptions="Fill" VerticalOptions="Start" Padding="20" Spacing="10">
+                    <lottie:AnimationView Animation="settings.json" 
+                                          Loop="true" 
+                                          AutoPlay="true"
+                                          HeightRequest="50"
+                                          WidthRequest="150"
+                                          VerticalOptions="Center" 
+                                          HorizontalOptions="Center" />
+                    <Label Text="Enter your details from customvision.ai" TextColor="DarkSlateBlue"
+                           HorizontalTextAlignment="Center" Margin="0,50,0,50"
+                           FontSize="Large">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Enter your details from " />
+                                <Span Text="customvision.ai"
+                                      TextColor="Blue">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenCustomVisionCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Text="Prediction Key" TextColor="DarkSlateBlue" Margin="5,0,0,0"/>
+                    <Entry Placeholder="Prediction Key" IsEnabled="{Binding IsEnabled}"
+                           Text="{Binding PredictionKey}"/>
+                    <Label Text="Project Id" Margin="5,20,0,0" TextColor="DarkSlateBlue"/>
+                    <Entry Placeholder="Project Id" IsEnabled="{Binding IsEnabled}"
+                           Text="{Binding ProjectId}"/>
+                    <Button Text="OK" BackgroundColor="DarkSlateBlue" TextColor="White"
+                            IsEnabled="{Binding IsEnabled}"
+                            Command="{Binding OkCommand}"/>
+                    <Button Text="Cancel" BackgroundColor="DarkSlateBlue" TextColor="White"
+                            IsVisible="{Binding CanCancel}"
+                            Command="{Binding CancelCommand}"/>
+                </StackLayout>
+                <Grid BackgroundColor="{StaticResource BusySheetBackground}" IsVisible="{Binding IsBusy}" 
+                      HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <lottie:AnimationView Animation="wave_load.json" 
+                                          IsVisible="{Binding IsBusy}"
+                                          Loop="true" 
+                                          AutoPlay="true"
+                                          HeightRequest="150"
+                                          WidthRequest="150"
+                                          VerticalOptions="Center" 
+                                          HorizontalOptions="Center" />
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
