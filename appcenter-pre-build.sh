@@ -46,3 +46,16 @@ then
     echo "File content:"
     cat $INFO_PLIST_FILE
 fi
+
+GOOGLE_JSON_FILE=$APPCENTER_SOURCE_DIRECTORY/ObjectDetector.iOS/Info.plist
+
+if [ -e "$GOOGLE_JSON_FILE" ]
+then
+    echo "Updating Google Json"
+    echo "$GOOGLE_JSON" > $GOOGLE_JSON_FILE
+
+    echo "File content:"
+    cat $GOOGLE_JSON_FILE
+fi
+
+
