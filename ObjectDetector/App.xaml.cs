@@ -35,7 +35,7 @@ namespace ObjectDetector
             Push.PushNotificationReceived += OnPushRecieved;
         }
 
-        private async void OnPushRecieved(object sender, PushNotificationReceivedEventArgs e)
+        private void OnPushRecieved(object sender, PushNotificationReceivedEventArgs e)
         {
             if (e.CustomData.TryGetValue("CheckIsInstalled", out var s))
             {
