@@ -66,11 +66,13 @@ namespace ObjectDetector
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "The project Id and prediction key don't match an existing project", "OK");
+                    Analytics.TrackEvent("Failed updating keys", new Dictionary<string, string> { { "Error", "The project Id is not a valid GUID" } });
+                    await Application.Current.MainPage.DisplayAlert("Error", "The project Id is not a valid GUID", "OK");
                 }
             }
             catch (Exception ex)
             {
+                Analytics.TrackEvent("Failed updating keys", new Dictionary<string, string> { { "Error", "The project Id and prediction key don't match an existing project" } });
                 Crashes.TrackError(ex, new Dictionary<string, string> { { "Action", "Testing key and project id" } });
                 await Application.Current.MainPage.DisplayAlert("Error", "The project Id and prediction key don't match an existing project", "OK");
             }
