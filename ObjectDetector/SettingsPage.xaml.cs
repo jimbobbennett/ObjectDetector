@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using Microsoft.AppCenter.Analytics;
+using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
@@ -16,6 +18,7 @@ namespace ObjectDetector
         {
             base.OnAppearing();
 
+            Analytics.TrackEvent("Loaded View", new Dictionary<string, string> { { "View", nameof(SettingsPage) } });
             await ((SettingsViewModel)BindingContext).SetUp();
         }
 

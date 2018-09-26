@@ -5,6 +5,8 @@ using SkiaSharp;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
 using Humanizer;
 using System.Linq;
+using Microsoft.AppCenter.Analytics;
+using System.Collections.Generic;
 
 namespace ObjectDetector
 {
@@ -26,6 +28,13 @@ namespace ObjectDetector
                     ImageCanvas.InvalidateSurface();
                 }
             };
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Analytics.TrackEvent("Loaded View", new Dictionary<string, string> { { "View", nameof(MainPage) } });
         }
 
         public void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)

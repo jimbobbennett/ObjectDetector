@@ -1,17 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.AppCenter.Analytics;
 
 namespace ObjectDetector
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        protected BaseViewModel()
-        {
-            Analytics.TrackEvent("Loaded View", new Dictionary<string, string> { { "ViewModelName", GetType().Name } });
-        }
-
         protected bool Set<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
         {
             if (Equals(field, value)) return false;
