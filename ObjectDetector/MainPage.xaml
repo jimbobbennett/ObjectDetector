@@ -8,7 +8,7 @@
              ios:Page.UseSafeArea="true"
              x:Class="ObjectDetector.MainPage"
              BackgroundColor="White"
-             Title="Object Detector">
+             Title="Predict image">
     <ContentPage.BindingContext>
         <local:MainViewModel/>
     </ContentPage.BindingContext>

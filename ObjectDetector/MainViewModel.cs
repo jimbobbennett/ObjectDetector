@@ -104,7 +104,7 @@ namespace ObjectDetector
             try
             {
                 var photo = await getPhotoFunc();
-                if (photo == null) return;
+                //if (photo == null) return;
 
                 Image = null;
                 AllPredictions = new List<PredictionModel>();
