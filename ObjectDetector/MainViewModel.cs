@@ -89,13 +89,13 @@ namespace ObjectDetector
         Task TakePhoto()
         {
             Analytics.TrackEvent("Take photo");
-            return GetPhoto(() => CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { PhotoSize = PhotoSize.Small }));
+            return GetPhoto(() => CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { PhotoSize = PhotoSize.Medium }));
         }
 
         Task PickPhoto()
         {
             Analytics.TrackEvent("Pick photo");
-            throw new NotImplementedException();
+            return GetPhoto(() => CrossMedia.Current.PickPhotoAsync(new PickMediaOptions { PhotoSize = PhotoSize.Medium }));
         }
 
         async Task GetPhoto(Func<Task<MediaFile>> getPhotoFunc)
@@ -105,6 +105,8 @@ namespace ObjectDetector
             try
             {
                 var photo = await getPhotoFunc();
+                if (photo == null)
+                    return;
 
                 Image = null;
                 AllPredictions = new List<PredictionModel>();
