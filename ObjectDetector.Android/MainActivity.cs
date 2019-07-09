@@ -2,7 +2,6 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Lottie.Forms.Droid;
 using Plugin.CurrentActivity;
 
 namespace ObjectDetector.Droid
@@ -16,10 +15,12 @@ namespace ObjectDetector.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState); 
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            AnimationViewRenderer.Init();
             LoadApplication(new App());
         }
 

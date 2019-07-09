@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="ObjectDetector.Help.HelpPage1"
+             BackgroundColor="DarkSlateBlue">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Text="   X   " HorizontalOptions="End"
+                VerticalOptions="Start"
+                BackgroundColor="#30000000"
+                CornerRadius="20"
+                TextColor="White"
+                FontSize="Large"
+                Margin="10,30"
+                Command="{Binding CloseCommand}"/>
+        <Label Text="Welcome to the Object Detector"
+               TextColor="White"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Margin="50" 
+               HorizontalTextAlignment="Center"/>
+        <Button BackgroundColor="Transparent" TextColor="White" Text="Next"
+                Grid.Row="1" FontSize="Large"
+                Command="{Binding ShowPage2Command}"/>
+    </Grid>
+</ContentPage>

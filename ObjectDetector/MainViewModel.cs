@@ -8,6 +8,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
+using ObjectDetector.Help;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.TextToSpeech;
@@ -24,6 +25,7 @@ namespace ObjectDetector
             TakePhotoCommand = new Command(async () => await TakePhoto());
             PickPhotoCommand = new Command(async () => await PickPhoto());
             ShowSettingsCommand = new Command(async () => await ShowSettings());
+            ShowHelpCommand = new Command(async () => await ShowHelp());
 #pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
         }
 
@@ -32,15 +34,22 @@ namespace ObjectDetector
             await Application.Current.MainPage.Navigation.PushModalAsync(SettingsPage.CreateSettingsPage(), true);
         }
 
+        async Task ShowHelp()
+        {
+            await Application.Current.MainPage.Navigation.PushModalAsync(new HelpPage(), true);
+        }
+
         async Task PredictPhoto(MediaFile photo)
         {
-            var endpoint = new PredictionEndpoint
+            var endpoint = new CustomVisionPredictionClient
             {
-                ApiKey = await KeyService.GetPredictionKey()
+                ApiKey = await KeyService.GetPredictionKey(),
+                Endpoint = await KeyService.GetEndpoint()
             };
 
-            var results = await endpoint.PredictImageAsync(Guid.Parse(await KeyService.GetProjectId()),
-                                                           photo.GetStream());
+            var results = await endpoint.DetectImageAsync(Guid.Parse(await KeyService.GetProjectId()),
+                                                          await KeyService.GetPublishName(),
+                                                          photo.GetStream());
             AllPredictions = results.Predictions
                                     .Where(p => p.Probability > Probability)
                                     .ToList();
@@ -85,6 +94,7 @@ namespace ObjectDetector
         public ICommand TakePhotoCommand { get; }
         public ICommand PickPhotoCommand { get; }
         public ICommand ShowSettingsCommand { get; }
+        public ICommand ShowHelpCommand { get;  }
 
         Task TakePhoto()
         {
@@ -130,10 +140,10 @@ namespace ObjectDetector
 
         async Task SayWhatYouSee()
         {
-            var text = "";
-
             try
             {
+                var text = "";
+
                 if (Predictions.Any())
                 {
                     if (Predictions.Count == 1)
