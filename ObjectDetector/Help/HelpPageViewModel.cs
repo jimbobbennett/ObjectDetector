@@ -27,7 +27,6 @@ namespace ObjectDetector.Help
             ShowPage3Command = new Command(async () =>
             {
                 Analytics.TrackEvent("Navigate to Help page 3");
-                Analytics.TrackEvent("Close Help");
                 currentPage = 3;
                 await navigation.PushAsync(new HelpPage3());
             });

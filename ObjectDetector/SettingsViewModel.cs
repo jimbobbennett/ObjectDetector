@@ -41,13 +41,15 @@ namespace ObjectDetector
         {
             if (string.IsNullOrWhiteSpace(PredictionKey) &&
                 string.IsNullOrWhiteSpace(ProjectId) &&
-                string.IsNullOrWhiteSpace(PublishName))
+                string.IsNullOrWhiteSpace(PublishName) &&
+                string.IsNullOrWhiteSpace(Endpoint))
             {
                 try
                 {
                     PredictionKey = await KeyService.GetPredictionKey();
                     ProjectId = await KeyService.GetProjectId();
                     PublishName = await KeyService.GetPublishName();
+                    Endpoint = await KeyService.GetEndpoint();
                 }
                 finally
                 {
@@ -258,6 +260,7 @@ namespace ObjectDetector
                     await KeyService.SetPredictionKey(PredictionKey);
                     await KeyService.SetProjectId(ProjectId);
                     await KeyService.SetPublishName(PublishName);
+                    await KeyService.SetEndpoint(Endpoint);
 
                     Analytics.TrackEvent("Updating keys");
 

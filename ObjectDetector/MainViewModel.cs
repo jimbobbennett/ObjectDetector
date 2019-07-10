@@ -31,11 +31,13 @@ namespace ObjectDetector
 
         async Task ShowSettings()
         {
+            Analytics.TrackEvent("Show settings");
             await Application.Current.MainPage.Navigation.PushModalAsync(SettingsPage.CreateSettingsPage(), true);
         }
 
         async Task ShowHelp()
         {
+            Analytics.TrackEvent("Show help");
             await Application.Current.MainPage.Navigation.PushModalAsync(new HelpPage(), true);
         }
 
@@ -105,6 +107,7 @@ namespace ObjectDetector
         Task PickPhoto()
         {
             Analytics.TrackEvent("Pick photo");
+            Crashes.GenerateTestCrash();
             return GetPhoto(() => CrossMedia.Current.PickPhotoAsync(new PickMediaOptions { PhotoSize = PhotoSize.Medium }));
         }
 
@@ -115,8 +118,6 @@ namespace ObjectDetector
             try
             {
                 var photo = await getPhotoFunc();
-                if (photo == null)
-                    return;
 
                 Image = null;
                 AllPredictions = new List<PredictionModel>();
