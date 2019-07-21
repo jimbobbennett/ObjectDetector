@@ -205,7 +205,7 @@ namespace ObjectDetector
                 while ((result.Status == TextOperationStatusCodes.Running ||
                         result.Status == TextOperationStatusCodes.NotStarted) && i++ < maxRetries)
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(100);
                     result = await computerVision.GetReadOperationResultAsync(operationId);
                 }
 
